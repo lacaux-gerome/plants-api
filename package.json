@@ -1,0 +1,14 @@
+{
+  "name": "plants-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "prisma2": "^2.0.0-preview021",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.0.0-preview021"
+  }
+}
