@@ -6,4 +6,3 @@ function createContext() {
     return { prisma: prisma };
 }
 exports.createContext = createContext;
-//# sourceMappingURL=context.js.map

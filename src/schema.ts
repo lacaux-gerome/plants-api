@@ -1,19 +1,16 @@
 import { nexusPrismaPlugin } from "nexus-prisma";
-import { makeSchema, objectType, stringArg, intArg } from "nexus";
+import { makeSchema, objectType } from "nexus";
 
 const User = objectType({
   name: "User",
   definition(t) {
     t.model.id();
+    t.model.createdAt();
     t.model.email();
     t.model.password();
     t.model.firstName();
-    t.list.field("plantBox", {
-      type: "PlantBox",
-      resolve(post, args, ctx) {
-        return ctx.prisma.plantBox.findMany({ first: 10 });
-      },
-    });
+    t.model.lastName();
+    t.model.plantBoxes({ pagination: true });
   },
 });
 
@@ -24,12 +21,9 @@ const PlantBox = objectType({
     t.model.name();
     t.model.description();
     t.model.image();
-    t.list.field("plant", {
-      type: "Plant",
-      resolve(post, args, ctx) {
-        return ctx.prisma.plant.findMany();
-      },
-    });
+    t.model.plants();
+    t.model.user();
+    t.model.userId();
   },
 });
 
@@ -40,19 +34,29 @@ const Plant = objectType({
     t.model.name();
     t.model.description();
     t.model.sprayFrequency();
+    t.model.sunExposure();
     t.model.image();
+    t.model.soilTypes();
+    t.model.box();
   },
 });
 
 const Query = objectType({
   name: "Query",
   definition(t) {
-    t.crud.plants({ pagination: true });
+    t.crud.plants();
+  },
+});
+
+const Mutation = objectType({
+  name: "Mutation",
+  definition(t) {
+    t.crud.createOneUser();
   },
 });
 
 export const schema = makeSchema({
-  types: [Query, User, Plant, PlantBox],
+  types: [Query, Mutation, User, Plant, PlantBox],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",

@@ -6,15 +6,12 @@ var User = nexus_1.objectType({
     name: "User",
     definition: function (t) {
         t.model.id();
+        t.model.createdAt();
         t.model.email();
         t.model.password();
         t.model.firstName();
-        t.list.field("plantBox", {
-            type: "PlantBox",
-            resolve: function (post, args, ctx) {
-                return ctx.prisma.plantBox.findMany({ first: 10 });
-            }
-        });
+        t.model.lastName();
+        t.model.plantBoxes({ pagination: true });
     }
 });
 var PlantBox = nexus_1.objectType({
@@ -24,12 +21,9 @@ var PlantBox = nexus_1.objectType({
         t.model.name();
         t.model.description();
         t.model.image();
-        t.list.field("plant", {
-            type: "Plant",
-            resolve: function (post, args, ctx) {
-                return ctx.prisma.plant.findMany();
-            }
-        });
+        t.model.plants();
+        t.model.user();
+        t.model.userId();
     }
 });
 var Plant = nexus_1.objectType({
@@ -39,11 +33,26 @@ var Plant = nexus_1.objectType({
         t.model.name();
         t.model.description();
         t.model.sprayFrequency();
+        t.model.sunExposure();
         t.model.image();
+        t.model.soilTypes();
+        t.model.box();
+    }
+});
+var Query = nexus_1.objectType({
+    name: "Query",
+    definition: function (t) {
+        t.crud.plants();
+    }
+});
+var Mutation = nexus_1.objectType({
+    name: "Mutation",
+    definition: function (t) {
+        t.crud.createOneUser();
     }
 });
 exports.schema = nexus_1.makeSchema({
-    types: [User, Plant, PlantBox],
+    types: [Query, Mutation, User, Plant, PlantBox],
     plugins: [nexus_prisma_1.nexusPrismaPlugin()],
     outputs: {
         schema: __dirname + "/../schema.graphql",
@@ -63,4 +72,3 @@ exports.schema = nexus_1.makeSchema({
         ]
     }
 });
-//# sourceMappingURL=schema.js.map

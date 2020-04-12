@@ -20,15 +20,52 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  PlantBoxCreateManyWithoutUserInput: { // input type
+    connect?: NexusGenInputs['PlantBoxWhereUniqueInput'][] | null; // [PlantBoxWhereUniqueInput!]
+    create?: NexusGenInputs['PlantBoxCreateWithoutUserInput'][] | null; // [PlantBoxCreateWithoutUserInput!]
+  }
+  PlantBoxCreateWithoutUserInput: { // input type
+    description: string; // String!
+    image: string; // String!
+    name: string; // String!
+    plants?: NexusGenInputs['PlantCreateManyWithoutBoxInput'] | null; // PlantCreateManyWithoutBoxInput
+  }
+  PlantBoxWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
+  PlantCreateManyWithoutBoxInput: { // input type
+    connect?: NexusGenInputs['PlantWhereUniqueInput'][] | null; // [PlantWhereUniqueInput!]
+    create?: NexusGenInputs['PlantCreateWithoutBoxInput'][] | null; // [PlantCreateWithoutBoxInput!]
+  }
+  PlantCreateWithoutBoxInput: { // input type
+    description: string; // String!
+    image?: string | null; // String
+    name: string; // String!
+    soilTypes: NexusGenEnums['Soil']; // Soil!
+    sprayFrequency: number; // Int!
+    sunExposure: NexusGenEnums['SunExposure']; // SunExposure!
+  }
   PlantWhereUniqueInput: { // input type
     id?: number | null; // Int
+  }
+  UserCreateInput: { // input type
+    createdAt?: any | null; // DateTime
+    email: string; // String!
+    firstName?: string | null; // String
+    id?: string | null; // String
+    lastName?: string | null; // String
+    password: string; // String!
+    plantBoxes?: NexusGenInputs['PlantBoxCreateManyWithoutUserInput'] | null; // PlantBoxCreateManyWithoutUserInput
   }
 }
 
 export interface NexusGenEnums {
+  Soil: prisma.Soil
+  SunExposure: prisma.SunExposure
 }
 
 export interface NexusGenRootTypes {
+  Mutation: {};
   Plant: prisma.Plant;
   PlantBox: prisma.PlantBox;
   Query: {};
@@ -38,44 +75,86 @@ export interface NexusGenRootTypes {
   Float: number;
   Boolean: boolean;
   ID: string;
+  DateTime: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  PlantBoxCreateManyWithoutUserInput: NexusGenInputs['PlantBoxCreateManyWithoutUserInput'];
+  PlantBoxCreateWithoutUserInput: NexusGenInputs['PlantBoxCreateWithoutUserInput'];
+  PlantBoxWhereUniqueInput: NexusGenInputs['PlantBoxWhereUniqueInput'];
+  PlantCreateManyWithoutBoxInput: NexusGenInputs['PlantCreateManyWithoutBoxInput'];
+  PlantCreateWithoutBoxInput: NexusGenInputs['PlantCreateWithoutBoxInput'];
   PlantWhereUniqueInput: NexusGenInputs['PlantWhereUniqueInput'];
+  UserCreateInput: NexusGenInputs['UserCreateInput'];
+  Soil: NexusGenEnums['Soil'];
+  SunExposure: NexusGenEnums['SunExposure'];
 }
 
 export interface NexusGenFieldTypes {
+  Mutation: { // field return type
+    createOneUser: NexusGenRootTypes['User']; // User!
+  }
   Plant: { // field return type
+    box: NexusGenRootTypes['PlantBox']; // PlantBox!
     description: string; // String!
     id: number; // Int!
     image: string | null; // String
     name: string; // String!
+    soilTypes: NexusGenEnums['Soil']; // Soil!
     sprayFrequency: number; // Int!
+    sunExposure: NexusGenEnums['SunExposure']; // SunExposure!
   }
   PlantBox: { // field return type
     description: string; // String!
     id: number; // Int!
     image: string; // String!
     name: string; // String!
-    plant: NexusGenRootTypes['Plant'][]; // [Plant!]!
+    plants: NexusGenRootTypes['Plant'][]; // [Plant!]!
+    user: NexusGenRootTypes['User'] | null; // User
+    userId: string | null; // String
   }
   Query: { // field return type
     plants: NexusGenRootTypes['Plant'][]; // [Plant!]!
   }
   User: { // field return type
+    createdAt: any; // DateTime!
     email: string; // String!
     firstName: string | null; // String
     id: string; // String!
+    lastName: string | null; // String
     password: string; // String!
-    plantBox: NexusGenRootTypes['PlantBox'][]; // [PlantBox!]!
+    plantBoxes: NexusGenRootTypes['PlantBox'][]; // [PlantBox!]!
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createOneUser: { // args
+      data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    }
+  }
+  PlantBox: {
+    plants: { // args
+      after?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
+      before?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+  }
   Query: {
     plants: { // args
       after?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
       before?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+  }
+  User: {
+    plantBoxes: { // args
+      after?: NexusGenInputs['PlantBoxWhereUniqueInput'] | null; // PlantBoxWhereUniqueInput
+      before?: NexusGenInputs['PlantBoxWhereUniqueInput'] | null; // PlantBoxWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
       skip?: number | null; // Int
@@ -88,15 +167,15 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Plant" | "PlantBox" | "Query" | "User";
+export type NexusGenObjectNames = "Mutation" | "Plant" | "PlantBox" | "Query" | "User";
 
-export type NexusGenInputNames = "PlantWhereUniqueInput";
+export type NexusGenInputNames = "PlantBoxCreateManyWithoutUserInput" | "PlantBoxCreateWithoutUserInput" | "PlantBoxWhereUniqueInput" | "PlantCreateManyWithoutBoxInput" | "PlantCreateWithoutBoxInput" | "PlantWhereUniqueInput" | "UserCreateInput";
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "Soil" | "SunExposure";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 

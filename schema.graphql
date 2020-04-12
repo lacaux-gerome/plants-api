@@ -2,12 +2,21 @@
 ### Do not make changes to this file directly
 
 
+scalar DateTime
+
+type Mutation {
+  createOneUser(data: UserCreateInput!): User!
+}
+
 type Plant {
+  box: PlantBox!
   description: String!
   id: Int!
   image: String
   name: String!
+  soilTypes: Soil!
   sprayFrequency: Int!
+  sunExposure: SunExposure!
 }
 
 type PlantBox {
@@ -15,7 +24,39 @@ type PlantBox {
   id: Int!
   image: String!
   name: String!
-  plant: [Plant!]!
+  plants(after: PlantWhereUniqueInput, before: PlantWhereUniqueInput, first: Int, last: Int, skip: Int): [Plant!]!
+  user: User
+  userId: String
+}
+
+input PlantBoxCreateManyWithoutUserInput {
+  connect: [PlantBoxWhereUniqueInput!]
+  create: [PlantBoxCreateWithoutUserInput!]
+}
+
+input PlantBoxCreateWithoutUserInput {
+  description: String!
+  image: String!
+  name: String!
+  plants: PlantCreateManyWithoutBoxInput
+}
+
+input PlantBoxWhereUniqueInput {
+  id: Int
+}
+
+input PlantCreateManyWithoutBoxInput {
+  connect: [PlantWhereUniqueInput!]
+  create: [PlantCreateWithoutBoxInput!]
+}
+
+input PlantCreateWithoutBoxInput {
+  description: String!
+  image: String
+  name: String!
+  soilTypes: Soil!
+  sprayFrequency: Int!
+  sunExposure: SunExposure!
 }
 
 input PlantWhereUniqueInput {
@@ -26,10 +67,34 @@ type Query {
   plants(after: PlantWhereUniqueInput, before: PlantWhereUniqueInput, first: Int, last: Int, skip: Int): [Plant!]!
 }
 
+enum Soil {
+  CLAY
+  SANDY
+  SILT
+}
+
+enum SunExposure {
+  FULL_SUN
+  HALF_SUN
+  NO_SUN
+}
+
 type User {
+  createdAt: DateTime!
   email: String!
   firstName: String
   id: String!
+  lastName: String
   password: String!
-  plantBox: [PlantBox!]!
+  plantBoxes(after: PlantBoxWhereUniqueInput, before: PlantBoxWhereUniqueInput, first: Int, last: Int, skip: Int): [PlantBox!]!
+}
+
+input UserCreateInput {
+  createdAt: DateTime
+  email: String!
+  firstName: String
+  id: String
+  lastName: String
+  password: String!
+  plantBoxes: PlantBoxCreateManyWithoutUserInput
 }

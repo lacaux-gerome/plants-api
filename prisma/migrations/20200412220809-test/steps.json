@@ -60,17 +60,6 @@
           "model": "User",
           "field": "id"
         },
-        "directive": "id"
-      }
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "User",
-          "field": "id"
-        },
         "directive": "default"
       }
     },
@@ -87,6 +76,17 @@
       },
       "argument": "",
       "value": "cuid()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "id"
+        },
+        "directive": "id"
+      }
     },
     {
       "tag": "CreateField",
@@ -141,13 +141,6 @@
     {
       "tag": "CreateField",
       "model": "User",
-      "field": "firstName",
-      "type": "String",
-      "arity": "Optional"
-    },
-    {
-      "tag": "CreateField",
-      "model": "User",
       "field": "password",
       "type": "String",
       "arity": "Required"
@@ -155,9 +148,48 @@
     {
       "tag": "CreateField",
       "model": "User",
-      "field": "box",
+      "field": "firstName",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "lastName",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "plantBoxes",
       "type": "PlantBox",
       "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "plantBoxes"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "plantBoxes"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
     },
     {
       "tag": "CreateModel",
@@ -169,17 +201,6 @@
       "field": "id",
       "type": "Int",
       "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "PlantBox",
-          "field": "id"
-        },
-        "directive": "id"
-      }
     },
     {
       "tag": "CreateDirective",
@@ -205,6 +226,17 @@
       },
       "argument": "",
       "value": "autoincrement()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "PlantBox",
+          "field": "id"
+        },
+        "directive": "id"
+      }
     },
     {
       "tag": "CreateField",
@@ -230,9 +262,62 @@
     {
       "tag": "CreateField",
       "model": "PlantBox",
-      "field": "plant",
+      "field": "plants",
       "type": "Plant",
       "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PlantBox",
+      "field": "user",
+      "type": "User",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "PlantBox",
+          "field": "user"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "PlantBox",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[userId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "PlantBox",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PlantBox",
+      "field": "userId",
+      "type": "String",
+      "arity": "Optional"
     },
     {
       "tag": "CreateModel",
@@ -244,17 +329,6 @@
       "field": "id",
       "type": "Int",
       "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Plant",
-          "field": "id"
-        },
-        "directive": "id"
-      }
     },
     {
       "tag": "CreateDirective",
@@ -280,6 +354,17 @@
       },
       "argument": "",
       "value": "autoincrement()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Plant",
+          "field": "id"
+        },
+        "directive": "id"
+      }
     },
     {
       "tag": "CreateField",
@@ -322,6 +407,52 @@
       "field": "soilTypes",
       "type": "Soil",
       "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Plant",
+      "field": "box",
+      "type": "PlantBox",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Plant",
+          "field": "box"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Plant",
+          "field": "box"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Plant",
+          "field": "box"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
     }
   ]
 }
