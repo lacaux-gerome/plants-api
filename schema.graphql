@@ -15,10 +15,15 @@ type PlantBox {
   id: Int!
   image: String!
   name: String!
+  plant: [Plant!]!
+}
+
+input PlantWhereUniqueInput {
+  id: Int
 }
 
 type Query {
-  ok: Boolean!
+  plants(after: PlantWhereUniqueInput, before: PlantWhereUniqueInput, first: Int, last: Int, skip: Int): [Plant!]!
 }
 
 type User {
@@ -26,4 +31,5 @@ type User {
   firstName: String
   id: String!
   password: String!
+  plantBox: [PlantBox!]!
 }

@@ -27,7 +27,7 @@ const PlantBox = objectType({
     t.list.field("plant", {
       type: "Plant",
       resolve(post, args, ctx) {
-        return ctx.prisma.plantBox.findMany();
+        return ctx.prisma.plant.findMany();
       },
     });
   },
@@ -44,8 +44,15 @@ const Plant = objectType({
   },
 });
 
+const Query = objectType({
+  name: "Query",
+  definition(t) {
+    t.crud.plants({ pagination: true });
+  },
+});
+
 export const schema = makeSchema({
-  types: [User, Plant, PlantBox],
+  types: [Query, User, Plant, PlantBox],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",

@@ -20,6 +20,9 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  PlantWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
 }
 
 export interface NexusGenEnums {
@@ -38,6 +41,7 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  PlantWhereUniqueInput: NexusGenInputs['PlantWhereUniqueInput'];
 }
 
 export interface NexusGenFieldTypes {
@@ -53,19 +57,30 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     image: string; // String!
     name: string; // String!
+    plant: NexusGenRootTypes['Plant'][]; // [Plant!]!
   }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    plants: NexusGenRootTypes['Plant'][]; // [Plant!]!
   }
   User: { // field return type
     email: string; // String!
     firstName: string | null; // String
     id: string; // String!
     password: string; // String!
+    plantBox: NexusGenRootTypes['PlantBox'][]; // [PlantBox!]!
   }
 }
 
 export interface NexusGenArgTypes {
+  Query: {
+    plants: { // args
+      after?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
+      before?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
@@ -75,7 +90,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Plant" | "PlantBox" | "Query" | "User";
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = "PlantWhereUniqueInput";
 
 export type NexusGenEnumNames = never;
 

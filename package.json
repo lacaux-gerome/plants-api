@@ -4,16 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf dist",
     "generate:prisma": "prisma2 generate",
     "generate:nexus": "cross-env NODE_ENV=development ts-node --transpile-only ./src/schema.ts",
     "generate": "yarn run generate:prisma && yarn run generate:nexus",
+    "migrate:database": "yarn prisma migrate save --experimental && yarn prisma migrate up --experimental",
     "postinstall": "yarn run generate",
-    "build": "yarn run generate && tsc"
+    "build": "yarn run generate && tsc",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/server",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "cross-env": "^7.0.0",
     "ts-node": "^8.6.2",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.5"
   },
   "dependencies": {
