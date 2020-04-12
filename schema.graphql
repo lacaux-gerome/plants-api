@@ -2,6 +2,28 @@
 ### Do not make changes to this file directly
 
 
+type Plant {
+  description: String!
+  id: Int!
+  image: String
+  name: String!
+  sprayFrequency: Int!
+}
+
+type PlantBox {
+  description: String!
+  id: Int!
+  image: String!
+  name: String!
+}
+
 type Query {
   ok: Boolean!
+}
+
+type User {
+  email: String!
+  firstName: String
+  id: String!
+  password: String!
 }

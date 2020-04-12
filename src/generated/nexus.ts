@@ -4,6 +4,7 @@
  */
 
 import * as Context from "../context"
+import * as prisma from "@prisma/client"
 
 
 
@@ -25,7 +26,10 @@ export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
+  Plant: prisma.Plant;
+  PlantBox: prisma.PlantBox;
   Query: {};
+  User: prisma.User;
   String: string;
   Int: number;
   Float: number;
@@ -37,8 +41,27 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
+  Plant: { // field return type
+    description: string; // String!
+    id: number; // Int!
+    image: string | null; // String
+    name: string; // String!
+    sprayFrequency: number; // Int!
+  }
+  PlantBox: { // field return type
+    description: string; // String!
+    id: number; // Int!
+    image: string; // String!
+    name: string; // String!
+  }
   Query: { // field return type
     ok: boolean; // Boolean!
+  }
+  User: { // field return type
+    email: string; // String!
+    firstName: string | null; // String
+    id: string; // String!
+    password: string; // String!
   }
 }
 
@@ -50,7 +73,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Query";
+export type NexusGenObjectNames = "Plant" | "PlantBox" | "Query" | "User";
 
 export type NexusGenInputNames = never;
 
