@@ -5,12 +5,10 @@ const User = objectType({
   name: "User",
   definition(t) {
     t.model.id();
-    t.model.createdAt();
     t.model.email();
     t.model.password();
     t.model.firstName();
     t.model.lastName();
-    t.model.plantBoxes({ pagination: true });
   },
 });
 
@@ -22,8 +20,6 @@ const PlantBox = objectType({
     t.model.description();
     t.model.image();
     t.model.plants();
-    t.model.user();
-    t.model.userId();
   },
 });
 
@@ -37,7 +33,7 @@ const Plant = objectType({
     t.model.sunExposure();
     t.model.image();
     t.model.soilTypes();
-    t.model.box();
+    t.model.plantBox();
   },
 });
 
@@ -56,7 +52,7 @@ const Mutation = objectType({
 });
 
 export const schema = makeSchema({
-  types: [Query, Mutation, User, Plant, PlantBox],
+  types: [Query, Mutation, Plant, User, PlantBox],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",

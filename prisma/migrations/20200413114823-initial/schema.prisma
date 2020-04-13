@@ -1,0 +1,30 @@
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Plant {
+  id             Int         @default(autoincrement()) @id
+  name           String
+  description    String
+  sprayFrequency Int
+  sunExposure    SunExposure
+  image          String?
+  soilTypes      Soil
+}
+
+enum Soil {
+  SANDY
+  CLAY
+  SILT
+}
+
+enum SunExposure {
+  FULL_SUN
+  HALF_SUN
+  NO_SUN
+}

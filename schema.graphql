@@ -9,11 +9,11 @@ type Mutation {
 }
 
 type Plant {
-  box: PlantBox!
   description: String!
   id: Int!
   image: String
   name: String!
+  plantBox: PlantBox
   soilTypes: Soil!
   sprayFrequency: Int!
   sunExposure: SunExposure!
@@ -25,38 +25,6 @@ type PlantBox {
   image: String!
   name: String!
   plants(after: PlantWhereUniqueInput, before: PlantWhereUniqueInput, first: Int, last: Int, skip: Int): [Plant!]!
-  user: User
-  userId: String
-}
-
-input PlantBoxCreateManyWithoutUserInput {
-  connect: [PlantBoxWhereUniqueInput!]
-  create: [PlantBoxCreateWithoutUserInput!]
-}
-
-input PlantBoxCreateWithoutUserInput {
-  description: String!
-  image: String!
-  name: String!
-  plants: PlantCreateManyWithoutBoxInput
-}
-
-input PlantBoxWhereUniqueInput {
-  id: Int
-}
-
-input PlantCreateManyWithoutBoxInput {
-  connect: [PlantWhereUniqueInput!]
-  create: [PlantCreateWithoutBoxInput!]
-}
-
-input PlantCreateWithoutBoxInput {
-  description: String!
-  image: String
-  name: String!
-  soilTypes: Soil!
-  sprayFrequency: Int!
-  sunExposure: SunExposure!
 }
 
 input PlantWhereUniqueInput {
@@ -80,13 +48,11 @@ enum SunExposure {
 }
 
 type User {
-  createdAt: DateTime!
   email: String!
   firstName: String
   id: String!
   lastName: String
   password: String!
-  plantBoxes(after: PlantBoxWhereUniqueInput, before: PlantBoxWhereUniqueInput, first: Int, last: Int, skip: Int): [PlantBox!]!
 }
 
 input UserCreateInput {
@@ -96,5 +62,4 @@ input UserCreateInput {
   id: String
   lastName: String
   password: String!
-  plantBoxes: PlantBoxCreateManyWithoutUserInput
 }

@@ -8,13 +8,12 @@ generator client {
 }
 
 model User {
-  id         String     @default(cuid()) @id
-  createdAt  DateTime   @default(now())
-  email      String     @unique
-  password   String
-  firstName  String?
-  lastName   String?
-  plantBoxes PlantBox[] @relation(references: [id])
+  id        String   @default(cuid()) @id
+  createdAt DateTime @default(now())
+  password  String
+  email     String   @unique
+  firstName String?
+  lastName  String?
 }
 
 model PlantBox {
@@ -23,8 +22,6 @@ model PlantBox {
   description String
   image       String
   plants      Plant[]
-  user        User?   @relation(fields: [userId], references: [id])
-  userId      String?
 }
 
 model Plant {
@@ -35,7 +32,8 @@ model Plant {
   sunExposure    SunExposure
   image          String?
   soilTypes      Soil
-  box            PlantBox    @relation(fields: [id], references: [id])
+  plantBox       PlantBox?   @relation(fields: [plantBoxId], references: [id])
+  plantBoxId     Int?
 }
 
 enum Soil {

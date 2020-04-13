@@ -3,4 +3,5 @@
 # Prisma Migrate lockfile v1
 # Read more about conflict resolution here: TODO
 
-20200412220809-test
+20200413114823-initial
+20200413120742-add-table-user-plant-box
