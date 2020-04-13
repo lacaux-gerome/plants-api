@@ -5,12 +5,12 @@
 scalar DateTime
 
 type Mutation {
-  createOneUser(data: UserCreateInput!): User!
+  signup(email: String!, password: String!): User!
 }
 
 type Plant {
   description: String!
-  id: Int!
+  id: ID!
   image: String
   name: String!
   plantBox: PlantBox
@@ -48,18 +48,10 @@ enum SunExposure {
 }
 
 type User {
+  createdAt: DateTime!
   email: String!
   firstName: String
-  id: String!
-  lastName: String
-  password: String!
-}
-
-input UserCreateInput {
-  createdAt: DateTime
-  email: String!
-  firstName: String
-  id: String
+  id: ID!
   lastName: String
   password: String!
 }

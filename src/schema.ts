@@ -1,14 +1,16 @@
 import { nexusPrismaPlugin } from "nexus-prisma";
-import { makeSchema, objectType } from "nexus";
+import { makeSchema, objectType, mutationField } from "nexus";
+import { UserAuthentification } from "./authentification";
 
 const User = objectType({
   name: "User",
   definition(t) {
-    t.model.id();
+    t.id("id");
     t.model.email();
     t.model.password();
     t.model.firstName();
     t.model.lastName();
+    t.model.createdAt();
   },
 });
 
@@ -26,7 +28,7 @@ const PlantBox = objectType({
 const Plant = objectType({
   name: "Plant",
   definition(t) {
-    t.model.id();
+    t.id("id");
     t.model.name();
     t.model.description();
     t.model.sprayFrequency();
@@ -44,15 +46,8 @@ const Query = objectType({
   },
 });
 
-const Mutation = objectType({
-  name: "Mutation",
-  definition(t) {
-    t.crud.createOneUser();
-  },
-});
-
 export const schema = makeSchema({
-  types: [Query, Mutation, Plant, User, PlantBox],
+  types: [Query, Plant, User, PlantBox, ...UserAuthentification],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",

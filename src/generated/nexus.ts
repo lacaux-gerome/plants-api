@@ -23,14 +23,6 @@ export interface NexusGenInputs {
   PlantWhereUniqueInput: { // input type
     id?: number | null; // Int
   }
-  UserCreateInput: { // input type
-    createdAt?: any | null; // DateTime
-    email: string; // String!
-    firstName?: string | null; // String
-    id?: string | null; // String
-    lastName?: string | null; // String
-    password: string; // String!
-  }
 }
 
 export interface NexusGenEnums {
@@ -54,18 +46,17 @@ export interface NexusGenRootTypes {
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   PlantWhereUniqueInput: NexusGenInputs['PlantWhereUniqueInput'];
-  UserCreateInput: NexusGenInputs['UserCreateInput'];
   Soil: NexusGenEnums['Soil'];
   SunExposure: NexusGenEnums['SunExposure'];
 }
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
-    createOneUser: NexusGenRootTypes['User']; // User!
+    signup: NexusGenRootTypes['User']; // User!
   }
   Plant: { // field return type
     description: string; // String!
-    id: number; // Int!
+    id: string; // ID!
     image: string | null; // String
     name: string; // String!
     plantBox: NexusGenRootTypes['PlantBox'] | null; // PlantBox
@@ -84,9 +75,10 @@ export interface NexusGenFieldTypes {
     plants: NexusGenRootTypes['Plant'][]; // [Plant!]!
   }
   User: { // field return type
+    createdAt: any; // DateTime!
     email: string; // String!
     firstName: string | null; // String
-    id: string; // String!
+    id: string; // ID!
     lastName: string | null; // String
     password: string; // String!
   }
@@ -94,8 +86,9 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createOneUser: { // args
-      data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    signup: { // args
+      email: string; // String!
+      password: string; // String!
     }
   }
   PlantBox: {
@@ -125,7 +118,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Mutation" | "Plant" | "PlantBox" | "Query" | "User";
 
-export type NexusGenInputNames = "PlantWhereUniqueInput" | "UserCreateInput";
+export type NexusGenInputNames = "PlantWhereUniqueInput";
 
 export type NexusGenEnumNames = "Soil" | "SunExposure";
 
