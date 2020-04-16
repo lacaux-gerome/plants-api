@@ -1,19 +1,12 @@
-import { objectType, mutationField, stringArg } from "nexus";
+import { User, SignupUserResp, Auth } from "./schema";
+import { SignupUser, LoginUser } from "./query";
 
-const Signup = mutationField("signup", {
-  type: "User",
-  args: {
-    email: stringArg({ required: true }),
-    password: stringArg({ required: true }),
-  },
-  resolve: (_, { email, password }, ctx) => {
-    return ctx.prisma.user.create({
-      data: {
-        password,
-        email,
-      },
-    });
-  },
-});
+export const ENCRYPTION_KEY_JWT = "secret_key_of_doom!";
 
-export const UserAuthentification = [Signup];
+export const UserAuthentification = [
+  User,
+  SignupUser,
+  LoginUser,
+  SignupUserResp,
+  Auth,
+];

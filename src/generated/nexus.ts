@@ -20,20 +20,15 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  PlantWhereUniqueInput: { // input type
-    id?: number | null; // Int
-  }
 }
 
 export interface NexusGenEnums {
-  Soil: prisma.Soil
-  SunExposure: prisma.SunExposure
 }
 
 export interface NexusGenRootTypes {
-  Mutation: {};
-  Plant: prisma.Plant;
-  PlantBox: prisma.PlantBox;
+  Auth: { // root type
+    token: string; // String!
+  }
   Query: {};
   User: prisma.User;
   String: string;
@@ -41,41 +36,21 @@ export interface NexusGenRootTypes {
   Float: number;
   Boolean: boolean;
   ID: string;
-  DateTime: any;
+  SignupUserResp: NexusGenRootTypes['User'];
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
-  PlantWhereUniqueInput: NexusGenInputs['PlantWhereUniqueInput'];
-  Soil: NexusGenEnums['Soil'];
-  SunExposure: NexusGenEnums['SunExposure'];
 }
 
 export interface NexusGenFieldTypes {
-  Mutation: { // field return type
-    signup: NexusGenRootTypes['User']; // User!
-  }
-  Plant: { // field return type
-    description: string; // String!
-    id: string; // ID!
-    image: string | null; // String
-    name: string; // String!
-    plantBox: NexusGenRootTypes['PlantBox'] | null; // PlantBox
-    soilTypes: NexusGenEnums['Soil']; // Soil!
-    sprayFrequency: number; // Int!
-    sunExposure: NexusGenEnums['SunExposure']; // SunExposure!
-  }
-  PlantBox: { // field return type
-    description: string; // String!
-    id: number; // Int!
-    image: string; // String!
-    name: string; // String!
-    plants: NexusGenRootTypes['Plant'][]; // [Plant!]!
+  Auth: { // field return type
+    token: string; // String!
   }
   Query: { // field return type
-    plants: NexusGenRootTypes['Plant'][]; // [Plant!]!
+    loginUser: NexusGenRootTypes['User']; // User!
+    signupUser: NexusGenRootTypes['SignupUserResp']; // SignupUserResp!
   }
   User: { // field return type
-    createdAt: any; // DateTime!
     email: string; // String!
     firstName: string | null; // String
     id: string; // ID!
@@ -85,48 +60,36 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenArgTypes {
-  Mutation: {
-    signup: { // args
+  Query: {
+    loginUser: { // args
       email: string; // String!
       password: string; // String!
     }
-  }
-  PlantBox: {
-    plants: { // args
-      after?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
-      before?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
-      first?: number | null; // Int
-      last?: number | null; // Int
-      skip?: number | null; // Int
-    }
-  }
-  Query: {
-    plants: { // args
-      after?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
-      before?: NexusGenInputs['PlantWhereUniqueInput'] | null; // PlantWhereUniqueInput
-      first?: number | null; // Int
-      last?: number | null; // Int
-      skip?: number | null; // Int
+    signupUser: { // args
+      email: string; // String!
+      firstName?: string | null; // String
+      password: string; // String!
     }
   }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
+  SignupUserResp: "User"
 }
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Plant" | "PlantBox" | "Query" | "User";
+export type NexusGenObjectNames = "Auth" | "Query" | "User";
 
-export type NexusGenInputNames = "PlantWhereUniqueInput";
+export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = "Soil" | "SunExposure";
+export type NexusGenEnumNames = never;
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 
-export type NexusGenUnionNames = never;
+export type NexusGenUnionNames = "SignupUserResp";
 
 export interface NexusGenTypes {
   context: Context.Context;
