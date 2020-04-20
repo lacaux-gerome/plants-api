@@ -26,8 +26,9 @@ export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
-  Auth: { // root type
-    token: string; // String!
+  AuthResp: { // root type
+    success: boolean; // Boolean!
+    user: NexusGenRootTypes['User']; // User!
   }
   Query: {};
   User: prisma.User;
@@ -36,26 +37,25 @@ export interface NexusGenRootTypes {
   Float: number;
   Boolean: boolean;
   ID: string;
-  SignupUserResp: NexusGenRootTypes['User'];
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
-  Auth: { // field return type
-    token: string; // String!
+  AuthResp: { // field return type
+    success: boolean; // Boolean!
+    user: NexusGenRootTypes['User']; // User!
   }
   Query: { // field return type
-    loginUser: NexusGenRootTypes['User']; // User!
-    signupUser: NexusGenRootTypes['SignupUserResp']; // SignupUserResp!
+    loginUser: NexusGenRootTypes['AuthResp']; // AuthResp!
+    signupUser: NexusGenRootTypes['AuthResp']; // AuthResp!
   }
   User: { // field return type
     email: string; // String!
     firstName: string | null; // String
     id: string; // ID!
     lastName: string | null; // String
-    password: string; // String!
   }
 }
 
@@ -74,12 +74,11 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
-  SignupUserResp: "User"
 }
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Auth" | "Query" | "User";
+export type NexusGenObjectNames = "AuthResp" | "Query" | "User";
 
 export type NexusGenInputNames = never;
 
@@ -89,7 +88,7 @@ export type NexusGenInterfaceNames = never;
 
 export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 
-export type NexusGenUnionNames = "SignupUserResp";
+export type NexusGenUnionNames = never;
 
 export interface NexusGenTypes {
   context: Context.Context;

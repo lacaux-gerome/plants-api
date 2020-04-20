@@ -1,12 +1,12 @@
 import { stringArg, queryField } from "nexus";
-import { UserCreateArgs, UserCreateInput } from "@prisma/client";
+import { UserCreateInput } from "@prisma/client";
 import { AuthenticationError, UserInputError } from "apollo-server";
 import { ENCRYPTION_KEY_JWT } from ".";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 export const SignupUser = queryField("signupUser", {
-  type: "SignupUserResp",
+  type: "AuthResp",
   args: {
     email: stringArg({ required: true }),
     password: stringArg({ required: true }),
@@ -21,7 +21,7 @@ export const SignupUser = queryField("signupUser", {
           password: bcrypt.hashSync(password, 10),
         },
       });
-      return { token: jwt.sign(newUser, "supersecret") };
+      return { success: true, user: newUser };
     } catch (error) {
       throw error;
     }
@@ -29,16 +29,14 @@ export const SignupUser = queryField("signupUser", {
 });
 
 export const LoginUser = queryField("loginUser", {
-  type: "User",
+  type: "AuthResp",
   args: {
     email: stringArg({ required: true }),
     password: stringArg({ required: true }),
   },
-  resolve: async (root, args: UserCreateArgs, ctx) => {
+  resolve: async (root, args: { email: string; password: string }, ctx) => {
     const { prisma } = ctx;
-    const {
-      data: { email, password },
-    } = args;
+    const { email, password } = args;
     const user = await prisma.user.findOne({
       where: {
         email: email,
@@ -54,9 +52,15 @@ export const LoginUser = queryField("loginUser", {
       });
     }
     const token = jwt.sign(
-      { email: user.email, id: user.id },
-      ENCRYPTION_KEY_JWT
+      { email: user.email, userId: user.id },
+      ENCRYPTION_KEY_JWT,
+      { expiresIn: "7d" }
     );
-    return { token };
+    ctx.res.cookie("token", token, {
+      httpOnly: true,
+      // secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days (a week)
+    });
+    return { success: true, user };
   },
 });

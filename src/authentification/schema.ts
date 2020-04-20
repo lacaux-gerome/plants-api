@@ -1,27 +1,18 @@
-import { objectType, unionType } from "@nexus/schema";
+import { objectType, unionType, enumType } from "@nexus/schema";
 
 export const User = objectType({
   name: "User",
   definition(t) {
-    t.id("id"),
-      t.model.email(),
-      t.model.firstName(),
-      t.model.lastName(),
-      t.model.password();
+    t.id("id"), t.model.email(), t.model.firstName(), t.model.lastName();
   },
 });
 
-export const Auth = objectType({
-  name: "Auth",
+export const AuthResp = objectType({
+  name: "AuthResp",
   definition(t) {
-    t.string("token");
-  },
-});
-
-export const SignupUserResp = unionType({
-  name: "SignupUserResp",
-  description: "Any container type that can be rendered into the feed",
-  definition(t) {
-    t.members("User", "Auth");
+    t.boolean("success");
+    t.field("user", {
+      type: "User",
+    });
   },
 });

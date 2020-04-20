@@ -2,22 +2,19 @@
 ### Do not make changes to this file directly
 
 
-type Auth {
-  token: String!
+type AuthResp {
+  success: Boolean!
+  user: User!
 }
 
 type Query {
-  loginUser(email: String!, password: String!): User!
-  signupUser(email: String!, firstName: String, password: String!): SignupUserResp!
+  loginUser(email: String!, password: String!): AuthResp!
+  signupUser(email: String!, firstName: String, password: String!): AuthResp!
 }
-
-"""Any container type that can be rendered into the feed"""
-union SignupUserResp = User
 
 type User {
   email: String!
   firstName: String
   id: ID!
   lastName: String
-  password: String!
 }
