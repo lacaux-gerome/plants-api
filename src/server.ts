@@ -1,5 +1,5 @@
-const express = require("express");
-import { createContext } from "./context";
+import express = require("express");
+import { createContext, contextExpress } from "./context";
 import { schema } from "./schema";
 const { ApolloServer } = require("apollo-server-express");
 const cors = require("cors");
@@ -15,11 +15,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
-const context = ({ req, res }) => ({ req, res });
-
 const server = new ApolloServer({
   schema,
-  context: (a: any) => ({ ...createContext(), ...context(a) }),
+  context: (a: any) => ({ ...createContext(), ...contextExpress(a) }),
   cors: false,
 });
 server.applyMiddleware({ app, cors: false });
