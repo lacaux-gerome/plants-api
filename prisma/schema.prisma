@@ -25,14 +25,15 @@ model PlantBox {
 }
 
 model Plant {
-  id             Int         @default(autoincrement()) @id
+  id             Int             @default(autoincrement()) @id
   name           String
   description    String
   sprayFrequency Int
-  sunExposure    SunExposure
+  cardinalPoint  CardinalPoint[]
+  shortExposure  ShortExposure
   image          String?
-  soilTypes      Soil
-  plantBox       PlantBox?   @relation(fields: [plantBoxId], references: [id])
+  soilTypes      Soil[]
+  plantBox       PlantBox?       @relation(fields: [plantBoxId], references: [id])
   plantBoxId     Int?
 }
 
@@ -42,8 +43,15 @@ enum Soil {
   SILT
 }
 
-enum SunExposure {
+enum ShortExposure {
   FULL_SUN
   HALF_SUN
   NO_SUN
+}
+
+enum CardinalPoint {
+  NORTH
+  SOUTH
+  EAST
+  WEST
 }

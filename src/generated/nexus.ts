@@ -23,6 +23,9 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  CardinalPoint: prisma.CardinalPoint
+  ShortExposure: prisma.ShortExposure
+  Soil: prisma.Soil
 }
 
 export interface NexusGenRootTypes {
@@ -30,6 +33,7 @@ export interface NexusGenRootTypes {
     success: boolean; // Boolean!
     user: NexusGenRootTypes['User']; // User!
   }
+  Plant: prisma.Plant;
   Query: {};
   User: prisma.User;
   String: string;
@@ -40,12 +44,25 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  CardinalPoint: NexusGenEnums['CardinalPoint'];
+  ShortExposure: NexusGenEnums['ShortExposure'];
+  Soil: NexusGenEnums['Soil'];
 }
 
 export interface NexusGenFieldTypes {
   AuthResp: { // field return type
     success: boolean; // Boolean!
     user: NexusGenRootTypes['User']; // User!
+  }
+  Plant: { // field return type
+    cardinalPoint: NexusGenEnums['CardinalPoint'][]; // [CardinalPoint!]!
+    description: string; // String!
+    id: string; // ID!
+    image: string | null; // String
+    name: string; // String!
+    shortExposure: NexusGenEnums['ShortExposure']; // ShortExposure!
+    soilTypes: NexusGenEnums['Soil'][]; // [Soil!]!
+    sprayFrequency: number; // Int!
   }
   Query: { // field return type
     loginUser: NexusGenRootTypes['AuthResp']; // AuthResp!
@@ -78,11 +95,11 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthResp" | "Query" | "User";
+export type NexusGenObjectNames = "AuthResp" | "Plant" | "Query" | "User";
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "CardinalPoint" | "ShortExposure" | "Soil";
 
 export type NexusGenInterfaceNames = never;
 

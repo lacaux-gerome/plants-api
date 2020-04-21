@@ -12,7 +12,7 @@ export const SignupUser = queryField("signupUser", {
     password: stringArg({ required: true }),
     firstName: stringArg(),
   },
-  resolve: async (root, args: UserCreateInput, { prisma }) => {
+  resolve: async (_, args: UserCreateInput, { prisma }) => {
     const { email, password } = args;
     try {
       const newUser = prisma.user.create({

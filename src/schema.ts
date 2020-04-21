@@ -1,6 +1,9 @@
 import { nexusPrismaPlugin } from "nexus-prisma";
-import { makeSchema, objectType } from "nexus";
-import { UserAuthentification } from "./authentification";
+import { makeSchema } from "nexus";
+
+// MODELS
+import { UserAuthentificationModel } from "./authentification";
+import { PlantModel } from "./plant";
 
 // const PlantBox = objectType({
 //   name: "PlantBox",
@@ -13,22 +16,8 @@ import { UserAuthentification } from "./authentification";
 //   },
 // });
 
-// const Plant = objectType({
-//   name: "Plant",
-//   definition(t) {
-//     t.id("id");
-//     t.model.name();
-//     t.model.description();
-//     t.model.sprayFrequency();
-//     t.model.sunExposure();
-//     t.model.image();
-//     t.model.soilTypes();
-//     t.model.plantBox();
-//   },
-// });
-
 export const schema = makeSchema({
-  types: [...UserAuthentification],
+  types: [...UserAuthentificationModel, ...PlantModel],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",

@@ -7,9 +7,39 @@ type AuthResp {
   user: User!
 }
 
+enum CardinalPoint {
+  EAST
+  NORTH
+  SOUTH
+  WEST
+}
+
+type Plant {
+  cardinalPoint: [CardinalPoint!]!
+  description: String!
+  id: ID!
+  image: String
+  name: String!
+  shortExposure: ShortExposure!
+  soilTypes: [Soil!]!
+  sprayFrequency: Int!
+}
+
 type Query {
   loginUser(email: String!, password: String!): AuthResp!
   signupUser(email: String!, firstName: String, password: String!): AuthResp!
+}
+
+enum ShortExposure {
+  FULL_SUN
+  HALF_SUN
+  NO_SUN
+}
+
+enum Soil {
+  CLAY
+  SANDY
+  SILT
 }
 
 type User {
