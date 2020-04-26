@@ -26,8 +26,7 @@ type Plant {
 }
 
 type Query {
-  loginUser(email: String!, password: String!): AuthResp!
-  signupUser(email: String!, firstName: String, password: String!): AuthResp!
+  loginAdminUser(email: String!, password: String!): AuthResp!
 }
 
 enum ShortExposure {

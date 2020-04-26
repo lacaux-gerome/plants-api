@@ -1,9 +1,52 @@
 import { stringArg, queryField } from "nexus";
-import { UserCreateInput } from "@prisma/client";
-import { AuthenticationError, UserInputError } from "apollo-server";
+import { UserInputError } from "apollo-server";
 import { ENCRYPTION_KEY_JWT } from ".";
-const bcrypt = require("bcrypt");
+import { UserCreateInput } from "@prisma/client";
+import { RoleError } from "src/errors/custom-errors";
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+export const LoginAdminUser = queryField("loginAdminUser", {
+  type: "AuthResp",
+  args: {
+    email: stringArg({ required: true }),
+    password: stringArg({ required: true }),
+  },
+  resolve: async (_, args: { email: string; password: string }, ctx) => {
+    const { prisma } = ctx;
+    const { email, password } = args;
+    const user = await prisma.user.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) {
+      throw new UserInputError("Form Arguments invalid", {
+        extraInfo: ["EMAIL_FIELD"],
+      });
+    }
+    if (user.role !== "ADMIN") {
+      throw RoleError("You are not admin");
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      throw new UserInputError("Form Arguments invalid", {
+        extraInfo: ["PASSWORD_FIELD"],
+      });
+    }
+    const token = jwt.sign(
+      { email: user.email, userId: user.id },
+      ENCRYPTION_KEY_JWT,
+      { expiresIn: "7d" }
+    );
+    ctx.res.cookie("token", token, {
+      httpOnly: true,
+      // secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days (a week)
+    });
+    return { success: true, user };
+  },
+});
 
 export const SignupUser = queryField("signupUser", {
   type: "AuthResp",
@@ -25,42 +68,5 @@ export const SignupUser = queryField("signupUser", {
     } catch (error) {
       throw error;
     }
-  },
-});
-
-export const LoginUser = queryField("loginUser", {
-  type: "AuthResp",
-  args: {
-    email: stringArg({ required: true }),
-    password: stringArg({ required: true }),
-  },
-  resolve: async (root, args: { email: string; password: string }, ctx) => {
-    const { prisma } = ctx;
-    const { email, password } = args;
-    const user = await prisma.user.findOne({
-      where: {
-        email: email,
-      },
-    });
-    if (!user) {
-      throw new AuthenticationError("must authenticate");
-    }
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) {
-      throw new UserInputError("Form Arguments invalid", {
-        invalidArgs: ["PASSWORD_FIELD"],
-      });
-    }
-    const token = jwt.sign(
-      { email: user.email, userId: user.id },
-      ENCRYPTION_KEY_JWT,
-      { expiresIn: "7d" }
-    );
-    ctx.res.cookie("token", token, {
-      httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days (a week)
-    });
-    return { success: true, user };
   },
 });

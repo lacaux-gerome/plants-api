@@ -65,8 +65,7 @@ export interface NexusGenFieldTypes {
     sprayFrequency: number; // Int!
   }
   Query: { // field return type
-    loginUser: NexusGenRootTypes['AuthResp']; // AuthResp!
-    signupUser: NexusGenRootTypes['AuthResp']; // AuthResp!
+    loginAdminUser: NexusGenRootTypes['AuthResp']; // AuthResp!
   }
   User: { // field return type
     email: string; // String!
@@ -78,13 +77,8 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Query: {
-    loginUser: { // args
+    loginAdminUser: { // args
       email: string; // String!
-      password: string; // String!
-    }
-    signupUser: { // args
-      email: string; // String!
-      firstName?: string | null; // String
       password: string; // String!
     }
   }
