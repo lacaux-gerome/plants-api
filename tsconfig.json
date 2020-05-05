@@ -6,8 +6,8 @@
     "rootDir": "src",
     "lib": ["esnext"],
     "esModuleInterop": true,
-    "strict": true,
-    "baseUrl": "."
+    "strict": true
+    // "baseUrl": "."
   },
   "include": ["src/**/*"]
 }

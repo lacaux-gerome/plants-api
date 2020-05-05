@@ -1,8 +1,9 @@
 import { stringArg, queryField } from "nexus";
 import { UserInputError } from "apollo-server";
-import { ENCRYPTION_KEY_JWT } from ".";
 import { UserCreateInput } from "@prisma/client";
-import { RoleError } from "src/errors/custom-errors";
+
+import { ENCRYPTION_KEY_JWT } from ".";
+import { RoleError } from "../errors/custom-errors";
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 

@@ -65,7 +65,10 @@ export interface NexusGenFieldTypes {
     sprayFrequency: number; // Int!
   }
   Query: { // field return type
+    createPlant: NexusGenRootTypes['Plant']; // Plant!
+    deletePlant: NexusGenRootTypes['Plant']; // Plant!
     loginAdminUser: NexusGenRootTypes['AuthResp']; // AuthResp!
+    updatePlant: NexusGenRootTypes['Plant']; // Plant!
   }
   User: { // field return type
     email: string; // String!
@@ -77,9 +80,28 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Query: {
+    createPlant: { // args
+      cardinalPoint: NexusGenEnums['CardinalPoint']; // CardinalPoint!
+      description: string; // String!
+      name: string; // String!
+      shortExposure: NexusGenEnums['ShortExposure']; // ShortExposure!
+      soilTypes: NexusGenEnums['Soil']; // Soil!
+      sprayFrequency: number; // Int!
+    }
+    deletePlant: { // args
+      id: number; // Int!
+    }
     loginAdminUser: { // args
       email: string; // String!
       password: string; // String!
+    }
+    updatePlant: { // args
+      description?: string | null; // String
+      id: number; // Int!
+      name?: string | null; // String
+      shortExposure?: NexusGenEnums['ShortExposure'] | null; // ShortExposure
+      soilTypes?: NexusGenEnums['Soil'][] | null; // [Soil!]
+      sprayFrequency?: number | null; // Int
     }
   }
 }

@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "generate:prisma": "prisma2 generate",
+    "generate:prisma": "prisma generate",
     "generate:nexus": "yarn cross-env NODE_ENV=development ts-node --transpile-only ./src/schema.ts",
     "generate": "yarn run generate:prisma && yarn run generate:nexus",
     "migrate:database": "yarn prisma migrate save --experimental && yarn prisma migrate up --experimental",

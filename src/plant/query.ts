@@ -1,30 +1,30 @@
-import { queryField, stringArg, arg, idArg } from "@nexus/schema";
+import { queryField, stringArg, arg, idArg, intArg } from "@nexus/schema";
 
 export const CreatePlant = queryField("createPlant", {
   type: "Plant",
   args: {
     name: stringArg({ required: true }),
     description: stringArg({ required: true }),
-    sprayFrequency: arg({
-      type: "CardinalPoint",
+    sprayFrequency: intArg({
       required: true,
     }),
     shortExposure: arg({
       type: "ShortExposure",
       required: true,
     }),
+    cardinalPoint: arg({
+      type: "CardinalPoint",
+      required: true,
+    }),
+    soilTypes: arg({
+      type: "Soil",
+      required: true,
+    }),
   },
-  resolve: async (
-    _,
-    { name, description, sprayFrequency, shortExposure },
-    { prisma }
-  ) => {
+  resolve: async (_, args, { prisma }) => {
     const plant = await prisma.plant.create({
       data: {
-        name,
-        description,
-        sprayFrequency,
-        shortExposure,
+        ...args,
       },
     });
     return plant;
@@ -34,11 +34,11 @@ export const CreatePlant = queryField("createPlant", {
 export const DeletePlant = queryField("deletePlant", {
   type: "Plant",
   args: {
-    id: idArg({ required: true }),
+    id: intArg({ required: true }),
   },
   resolve: async (_, { id }, { prisma }) => {
     const plant = await prisma.plant.delete({
-      where: id,
+      where: { id },
     });
     return plant;
   },
@@ -47,13 +47,19 @@ export const DeletePlant = queryField("deletePlant", {
 export const UpdatePlant = queryField("updatePlant", {
   type: "Plant",
   args: {
-    id: idArg({ required: true }),
+    id: intArg({ required: true }),
+    name: stringArg(),
+    description: stringArg(),
+    sprayFrequency: intArg(),
+    shortExposure: arg({ type: "ShortExposure" }),
+    soilTypes: arg({ type: "Soil", list: true }),
   },
-  resolve: async (_, { id }, { prisma }) => {
+  resolve: async (_, { id, ...args }, { prisma }) => {
     const plant = await prisma.plant.update({
-      where: id,
+      where: { id },
       data: {
         id,
+        ...args,
       },
     });
     return plant;
