@@ -81,11 +81,11 @@ export interface NexusGenFieldTypes {
 export interface NexusGenArgTypes {
   Query: {
     createPlant: { // args
-      cardinalPoint: NexusGenEnums['CardinalPoint']; // CardinalPoint!
+      cardinalPoint?: NexusGenEnums['CardinalPoint'][] | null; // [CardinalPoint!]
       description: string; // String!
       name: string; // String!
       shortExposure: NexusGenEnums['ShortExposure']; // ShortExposure!
-      soilTypes: NexusGenEnums['Soil']; // Soil!
+      soilTypes?: NexusGenEnums['Soil'][] | null; // [Soil!]
       sprayFrequency: number; // Int!
     }
     deletePlant: { // args
@@ -96,6 +96,7 @@ export interface NexusGenArgTypes {
       password: string; // String!
     }
     updatePlant: { // args
+      cardinalPoint?: NexusGenEnums['CardinalPoint'][] | null; // [CardinalPoint!]
       description?: string | null; // String
       id: number; // Int!
       name?: string | null; // String

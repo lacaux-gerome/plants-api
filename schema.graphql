@@ -26,10 +26,10 @@ type Plant {
 }
 
 type Query {
-  createPlant(cardinalPoint: CardinalPoint!, description: String!, name: String!, shortExposure: ShortExposure!, soilTypes: Soil!, sprayFrequency: Int!): Plant!
+  createPlant(cardinalPoint: [CardinalPoint!], description: String!, name: String!, shortExposure: ShortExposure!, soilTypes: [Soil!], sprayFrequency: Int!): Plant!
   deletePlant(id: Int!): Plant!
   loginAdminUser(email: String!, password: String!): AuthResp!
-  updatePlant(description: String, id: Int!, name: String, shortExposure: ShortExposure, soilTypes: [Soil!], sprayFrequency: Int): Plant!
+  updatePlant(cardinalPoint: [CardinalPoint!], description: String, id: Int!, name: String, shortExposure: ShortExposure, soilTypes: [Soil!], sprayFrequency: Int): Plant!
 }
 
 enum ShortExposure {

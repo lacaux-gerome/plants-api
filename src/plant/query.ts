@@ -12,19 +12,18 @@ export const CreatePlant = queryField("createPlant", {
       type: "ShortExposure",
       required: true,
     }),
+    soilTypes: arg({ type: "Soil", list: true }),
     cardinalPoint: arg({
       type: "CardinalPoint",
-      required: true,
-    }),
-    soilTypes: arg({
-      type: "Soil",
-      required: true,
+      list: true,
     }),
   },
-  resolve: async (_, args, { prisma }) => {
+  resolve: async (_, { cardinalPoint, soilTypes, ...args }, { prisma }) => {
     const plant = await prisma.plant.create({
       data: {
         ...args,
+        soilTypes: { set: soilTypes },
+        cardinalPoint: { set: cardinalPoint },
       },
     });
     return plant;
@@ -53,12 +52,18 @@ export const UpdatePlant = queryField("updatePlant", {
     sprayFrequency: intArg(),
     shortExposure: arg({ type: "ShortExposure" }),
     soilTypes: arg({ type: "Soil", list: true }),
+    cardinalPoint: arg({
+      type: "CardinalPoint",
+      list: true,
+    }),
   },
-  resolve: async (_, { id, ...args }, { prisma }) => {
+  resolve: async (_, { id, soilTypes, cardinalPoint, ...args }, { prisma }) => {
     const plant = await prisma.plant.update({
       where: { id },
       data: {
         id,
+        soilTypes: { set: soilTypes },
+        cardinalPoint: { set: cardinalPoint },
         ...args,
       },
     });
