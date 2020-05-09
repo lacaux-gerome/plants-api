@@ -2,19 +2,8 @@ import { nexusPrismaPlugin } from "nexus-prisma";
 import { makeSchema } from "nexus";
 
 // MODELS
-import { UserAuthentificationModel } from "./authentification";
-import { PlantModel } from "./plant";
-
-// const PlantBox = objectType({
-//   name: "PlantBox",
-//   definition(t) {
-//     t.model.id();
-//     t.model.name();
-//     t.model.description();
-//     t.model.image();
-//     t.model.plants();
-//   },
-// });
+import { UserAuthentificationModel } from "./types/authentification";
+import { PlantModel } from "./types/plant";
 
 export const schema = makeSchema({
   types: [...UserAuthentificationModel, ...PlantModel],

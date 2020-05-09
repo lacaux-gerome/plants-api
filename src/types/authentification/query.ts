@@ -3,7 +3,7 @@ import { UserInputError } from "apollo-server";
 import { UserCreateInput } from "@prisma/client";
 
 import { ENCRYPTION_KEY_JWT } from ".";
-import { RoleError } from "../errors/custom-errors";
+import { RoleError } from "../../errors/custom-errors";
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 

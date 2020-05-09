@@ -1,4 +1,5 @@
 import { queryField, stringArg, arg, idArg, intArg } from "@nexus/schema";
+import { optionalFieldToInputSetable } from "../utils/utils-object";
 
 export const CreatePlant = queryField("createPlant", {
   type: "Plant",
@@ -22,8 +23,8 @@ export const CreatePlant = queryField("createPlant", {
     const plant = await prisma.plant.create({
       data: {
         ...args,
-        soilTypes: { set: soilTypes },
-        cardinalPoint: { set: cardinalPoint },
+        ...optionalFieldToInputSetable(soilTypes),
+        ...optionalFieldToInputSetable(cardinalPoint),
       },
     });
     return plant;
@@ -47,14 +48,15 @@ export const UpdatePlant = queryField("updatePlant", {
   type: "Plant",
   args: {
     id: intArg({ required: true }),
-    name: stringArg(),
-    description: stringArg(),
-    sprayFrequency: intArg(),
-    shortExposure: arg({ type: "ShortExposure" }),
-    soilTypes: arg({ type: "Soil", list: true }),
+    name: stringArg({ nullable: true }),
+    description: stringArg({ nullable: true }),
+    sprayFrequency: intArg({ nullable: true }),
+    shortExposure: arg({ type: "ShortExposure", nullable: true }),
+    soilTypes: arg({ type: "Soil", list: true, nullable: true }),
     cardinalPoint: arg({
       type: "CardinalPoint",
       list: true,
+      nullable: true,
     }),
   },
   resolve: async (_, { id, soilTypes, cardinalPoint, ...args }, { prisma }) => {
@@ -62,8 +64,8 @@ export const UpdatePlant = queryField("updatePlant", {
       where: { id },
       data: {
         id,
-        soilTypes: { set: soilTypes },
-        cardinalPoint: { set: cardinalPoint },
+        ...optionalFieldToInputSetable(soilTypes),
+        ...optionalFieldToInputSetable(cardinalPoint),
         ...args,
       },
     });

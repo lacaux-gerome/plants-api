@@ -25,6 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.listen(4000, () =>
   console.log(
-    `🔥🔥🔥 GraphQL + Express auth tutorial listening on port http://localhost:4000/`
+    `🔥🔥🔥 GraphQL + Express auth tutorial listening on port http://localhost:4000/graphql`
   )
 );
