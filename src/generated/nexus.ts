@@ -26,12 +26,17 @@ export interface NexusGenEnums {
   CardinalPoint: prisma.CardinalPoint
   ShortExposure: prisma.ShortExposure
   Soil: prisma.Soil
+  UserRole: prisma.UserRole
 }
 
 export interface NexusGenRootTypes {
   AuthResp: { // root type
     success: boolean; // Boolean!
     user: NexusGenRootTypes['User']; // User!
+  }
+  PaginatedUsers: { // root type
+    length: number; // Int!
+    users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Plant: prisma.Plant;
   Query: {};
@@ -41,18 +46,24 @@ export interface NexusGenRootTypes {
   Float: number;
   Boolean: boolean;
   ID: string;
+  DateTime: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   CardinalPoint: NexusGenEnums['CardinalPoint'];
   ShortExposure: NexusGenEnums['ShortExposure'];
   Soil: NexusGenEnums['Soil'];
+  UserRole: NexusGenEnums['UserRole'];
 }
 
 export interface NexusGenFieldTypes {
   AuthResp: { // field return type
     success: boolean; // Boolean!
     user: NexusGenRootTypes['User']; // User!
+  }
+  PaginatedUsers: { // field return type
+    length: number; // Int!
+    users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Plant: { // field return type
     cardinalPoint: NexusGenEnums['CardinalPoint'][]; // [CardinalPoint!]!
@@ -68,13 +79,16 @@ export interface NexusGenFieldTypes {
     createPlant: NexusGenRootTypes['Plant']; // Plant!
     deletePlant: NexusGenRootTypes['Plant']; // Plant!
     loginAdminUser: NexusGenRootTypes['AuthResp']; // AuthResp!
+    paginatedUsers: NexusGenRootTypes['PaginatedUsers']; // PaginatedUsers!
     updatePlant: NexusGenRootTypes['Plant']; // Plant!
   }
   User: { // field return type
+    createdAt: any; // DateTime!
     email: string; // String!
     firstName: string | null; // String
-    id: string; // ID!
+    id: string; // String!
     lastName: string | null; // String
+    role: NexusGenEnums['UserRole']; // UserRole!
   }
 }
 
@@ -95,6 +109,11 @@ export interface NexusGenArgTypes {
       email: string; // String!
       password: string; // String!
     }
+    paginatedUsers: { // args
+      limit: number; // Int!
+      offset: number; // Int!
+      role?: NexusGenEnums['UserRole'] | null; // UserRole
+    }
     updatePlant: { // args
       cardinalPoint?: NexusGenEnums['CardinalPoint'][] | null; // [CardinalPoint!]
       description?: string | null; // String
@@ -112,15 +131,15 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthResp" | "Plant" | "Query" | "User";
+export type NexusGenObjectNames = "AuthResp" | "PaginatedUsers" | "Plant" | "Query" | "User";
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = "CardinalPoint" | "ShortExposure" | "Soil";
+export type NexusGenEnumNames = "CardinalPoint" | "ShortExposure" | "Soil" | "UserRole";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 

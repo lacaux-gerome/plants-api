@@ -14,6 +14,13 @@ enum CardinalPoint {
   WEST
 }
 
+scalar DateTime
+
+type PaginatedUsers {
+  length: Int!
+  users: [User!]!
+}
+
 type Plant {
   cardinalPoint: [CardinalPoint!]!
   description: String!
@@ -29,6 +36,7 @@ type Query {
   createPlant(cardinalPoint: [CardinalPoint!], description: String!, name: String!, shortExposure: ShortExposure!, soilTypes: [Soil!], sprayFrequency: Int!): Plant!
   deletePlant(id: Int!): Plant!
   loginAdminUser(email: String!, password: String!): AuthResp!
+  paginatedUsers(limit: Int!, offset: Int!, role: UserRole): PaginatedUsers!
   updatePlant(cardinalPoint: [CardinalPoint!], description: String, id: Int!, name: String, shortExposure: ShortExposure, soilTypes: [Soil!], sprayFrequency: Int): Plant!
 }
 
@@ -45,8 +53,15 @@ enum Soil {
 }
 
 type User {
+  createdAt: DateTime!
   email: String!
   firstName: String
-  id: ID!
+  id: String!
   lastName: String
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }
